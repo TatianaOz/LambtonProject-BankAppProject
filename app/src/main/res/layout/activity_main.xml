@@ -54,7 +54,8 @@
             android:text="Pay Utility Bills"
             android:textAlignment="center"
             android:textColor="#0D8EC1"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:onClick="getAction"/>
 
         <TextView
             android:id="@+id/moneyTransfer"
@@ -64,6 +65,7 @@
             android:text="Transfer The Money"
             android:textAlignment="center"
             android:textColor="#0D8EC1"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:onClick="getAction"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
