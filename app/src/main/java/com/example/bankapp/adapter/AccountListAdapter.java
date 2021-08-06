@@ -11,11 +11,13 @@ import android.widget.TextView;
 import com.example.bankapp.Account;
 import com.example.bankapp.R;
 
+import java.util.List;
+
 public class AccountListAdapter extends ArrayAdapter<Account> {
-    private Account[] accounts;
+    private List<Account> accounts;
     private Activity context;
 
-    public AccountListAdapter(Activity context, Account[] accounts) {
+    public AccountListAdapter(Activity context, List<Account> accounts) {
         super(context, R.layout.list_item_account, accounts);
         this.context = context;
         this.accounts = accounts;
@@ -35,8 +37,8 @@ public class AccountListAdapter extends ArrayAdapter<Account> {
 
 
 
-        tvAccountName.setText(accounts[position].getAccountId() + "");
-        tvBalance.setText(Double.toString(accounts[position].getAmount()));
+        tvAccountName.setText(accounts.get(position).getAccountId() + "");
+        tvBalance.setText(Double.toString(accounts.get(position).getAmount()));
         return  listViewItem;
     }
 }

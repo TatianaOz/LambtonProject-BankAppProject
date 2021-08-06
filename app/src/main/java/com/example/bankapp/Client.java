@@ -2,13 +2,14 @@ package com.example.bankapp;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Client implements Serializable {
 
     //Fields
     private int accessCardNumber;
     private String clientName;
-    private ArrayList<Account> clientAccounts;
+    private List<Account> clientAccounts;
     private int pin;
 
     //Getters and Setters
@@ -28,11 +29,11 @@ public class Client implements Serializable {
         this.clientName = clientName;
     }
 
-    public ArrayList<Account> getClientAccounts() {
+    public List<Account> getClientAccounts() {
         return clientAccounts;
     }
 
-    public void setClientAccounts(ArrayList<Account> clientAccounts) {
+    public void setClientAccounts(List<Account> clientAccounts) {
         this.clientAccounts = clientAccounts;
     }
 
@@ -45,7 +46,7 @@ public class Client implements Serializable {
     }
 
     //Constructors
-    public Client(int accessCardNumber, String clientName, ArrayList<Account> clientAccounts, int pin) {
+    public Client(int accessCardNumber, String clientName, List<Account> clientAccounts, int pin) {
         this.accessCardNumber = accessCardNumber;
         this.clientName = clientName;
         this.clientAccounts = clientAccounts;
@@ -55,7 +56,7 @@ public class Client implements Serializable {
     public Client(int accessCardNumber, String clientName, int pin) {
         this.accessCardNumber = accessCardNumber;
         this.clientName = clientName;
-        this.clientAccounts = new ArrayList<Account>();
+        this.clientAccounts = new ArrayList<>();
         this.pin = pin;
     }
 }

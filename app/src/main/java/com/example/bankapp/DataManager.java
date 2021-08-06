@@ -18,6 +18,8 @@ public class DataManager {
     public List<Client> getClients() {
         return mClients;
     }
+    private DataManager() {
+    }
 
     private void initializeClients() {
         mClients.add(initializeClient1());
@@ -26,28 +28,28 @@ public class DataManager {
     }
 
     private Client initializeClient1() {
-        ArrayList<Account> accounts = new ArrayList<>();
-        accounts.add(new Account(789654321, 2505.0));
-        accounts.add(new Account(789654321, 2505.0));
-        accounts.add(new Account(789654321, 2505.0));
+        List<Account> accounts = new ArrayList<>();
+        accounts.add(new Account(789654399, 1505.0));
+        accounts.add(new Account(789654398, 2005.0));
+        accounts.add(new Account(789654397, 800.0));
 
         return new Client(456654, "Rick Sanchez", accounts, 1234);
     }
 
     private Client initializeClient2() {
-        ArrayList<Account> accounts = new ArrayList<>();
-        accounts.add(new Account(789654321, 2505.0));
-        accounts.add(new Account(789654321, 2505.0));
-        accounts.add(new Account(789654321, 2505.0));
+        List<Account> accounts = new ArrayList<>();
+        accounts.add(new Account(789654301, 105.0));
+        accounts.add(new Account(789654302, 100.0));
+        accounts.add(new Account(789654303, 25.0));
 
         return new Client(789987, "Morty Smith", accounts, 1234);
     }
 
     private Client initializeClient3() {
-        ArrayList<Account> accounts = new ArrayList<>();
-        accounts.add(new Account(789654321, 2505.0));
-        accounts.add(new Account(789654321, 2505.0));
-        accounts.add(new Account(789654321, 2505.0));
+        List<Account> accounts = new ArrayList<>();
+        accounts.add(new Account(789654310, 1500.0));
+        accounts.add(new Account(789654311, 200.0));
+        accounts.add(new Account(789654313, 5205.0));
 
         return new Client(321123, "Summer Smith", accounts, 1234);
     }

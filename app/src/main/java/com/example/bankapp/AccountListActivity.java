@@ -6,16 +6,13 @@ import android.widget.ListView;
 
 import com.example.bankapp.adapter.AccountListAdapter;
 
+import java.util.List;
+
 public class AccountListActivity extends AppCompatActivity {
-
     ListView listViewAccounts;
+    List<Account> accountList;
+    static Client client;
 
-    Account []accounts = {
-            new Account(1,100),
-            new Account(2, 1200),
-            new Account(3, 2000),
-            new Account(4, 4000)
-    };
 
     AccountListAdapter listAdapter;
 
@@ -23,10 +20,11 @@ public class AccountListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_list);
-
+        client = (Client) getIntent().getSerializableExtra("Client");
+        accountList = client.getClientAccounts();
         listViewAccounts = findViewById(R.id.listViewAccounts);
 
-        listAdapter = new AccountListAdapter(this, accounts);
+        listAdapter = new AccountListAdapter(this, accountList);
 
         listViewAccounts.setAdapter(listAdapter);
 
