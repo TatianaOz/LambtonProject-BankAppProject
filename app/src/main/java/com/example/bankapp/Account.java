@@ -1,6 +1,8 @@
 package com.example.bankapp;
 
-public class Account {
+import java.io.Serializable;
+
+public class Account implements Serializable {
 
     // Fields
     private int accountId;

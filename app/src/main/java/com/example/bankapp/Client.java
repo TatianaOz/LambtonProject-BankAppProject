@@ -1,8 +1,9 @@
 package com.example.bankapp;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Client {
+public class Client implements Serializable {
 
     //Fields
     private int clientId;
