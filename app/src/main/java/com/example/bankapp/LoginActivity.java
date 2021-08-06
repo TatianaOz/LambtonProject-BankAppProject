@@ -22,7 +22,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 //todo chech validation and get Client from the ArrayList of clients
                 //only for test - added some client. Remove this row
-                Client client = new Client(123, "AA BB", "123R");
+                Client client = new Client("User1", "AA BB", "123R");
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.putExtra("Client",client);
                 startActivity(intent);

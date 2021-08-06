@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
         //set Hello message
         client = (Client) getIntent().getSerializableExtra("Client");
-        helloMessage.setText("Hello " + client.getClientName());
+        helloMessage.setText("Hello " + client.getClientName() + "!");
 
     }
 

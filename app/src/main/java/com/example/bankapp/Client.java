@@ -6,18 +6,18 @@ import java.util.ArrayList;
 public class Client implements Serializable {
 
     //Fields
-    private int clientId;
+    private String clientUserName;
     private String clientName;
     private ArrayList<Account> clientAccounts;
     private String password;
 
     //Getters and Setters
-    public int getClientId() {
-        return clientId;
+    public String getClientUserName() {
+        return clientUserName;
     }
 
-    public void setClientId(int clientId) {
-        this.clientId = clientId;
+    public void setClientUserName(String clientUserName) {
+        this.clientUserName = clientUserName;
     }
 
     public String getClientName() {
@@ -45,15 +45,15 @@ public class Client implements Serializable {
     }
 
     //Constructors
-    public Client(int clientId, String clientName, ArrayList<Account> clientAccounts, String password) {
-        this.clientId = clientId;
+    public Client(String clientUserName, String clientName, ArrayList<Account> clientAccounts, String password) {
+        this.clientUserName = clientUserName;
         this.clientName = clientName;
         this.clientAccounts = clientAccounts;
         this.password = password;
     }
 
-    public Client(int clientId, String clientName, String password) {
-        this.clientId = clientId;
+    public Client(String clientUserName, String clientName, String password) {
+        this.clientUserName = clientUserName;
         this.clientName = clientName;
         this.clientAccounts = new ArrayList<Account>();
         this.password = password;
