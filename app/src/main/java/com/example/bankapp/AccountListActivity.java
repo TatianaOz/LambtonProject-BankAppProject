@@ -1,14 +1,13 @@
 package com.example.bankapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
-public class AccountsListActivity extends AppCompatActivity {
+public class AccountListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_accounts_list);
+        setContentView(R.layout.activity_account_list);
     }
 }

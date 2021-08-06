@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent;
         switch (view.getId()){
             case R.id.accountsList:
-                intent = new Intent(this, AccountsListActivity.class);
+                intent = new Intent(this, AccountListActivity.class);
                 startActivity(intent);
                 break;
             case R.id.payTheBill:
