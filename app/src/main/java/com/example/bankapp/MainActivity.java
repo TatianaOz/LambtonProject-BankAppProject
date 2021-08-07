@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
         switch (view.getId()){
             case R.id.accountsList:
                 intent = new Intent(this, AccountListActivity.class);
+                //get updated data from clients list
+                client = DataManager.getClientByName(client.getClientName());
                 intent.putExtra("Client", client);
                 startActivity(intent);
                 break;
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.moneyTransfer:
                 intent = new Intent(this, MoneyTransferActivity.class);
+                client = DataManager.getClientByName(client.getClientName());
                 intent.putExtra("Client", client);
                 startActivity(intent);
                 break;

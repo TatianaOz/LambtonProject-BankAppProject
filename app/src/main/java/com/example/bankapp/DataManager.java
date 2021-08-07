@@ -5,7 +5,7 @@ import java.util.List;
 
 public class DataManager {
     private static DataManager ourInstance = null;
-    private List<Client> mClients = new ArrayList<>();
+    public static ArrayList<Client> mClients = new ArrayList<>();
 
     public static DataManager getInstance() {
         if(ourInstance == null) {
@@ -52,5 +52,25 @@ public class DataManager {
         accounts.add(new Account(789654313, 5205.0));
 
         return new Client(321123, "Summer Smith", accounts, 1234);
+    }
+
+    public static Client getClientByName(String name){
+        Client client = null;
+        for (Client c: mClients){
+            if (c.getClientName().equals(name)){
+                client = c;
+            }
+        }
+        return client;
+    }
+
+    public static int getClientIndexByName(String name){
+        int index = 0;
+        for (int i = 0; i < mClients.size(); i++){
+            if (mClients.get(i).getClientName().equals(name)){
+                index = i;
+            }
+        }
+        return index;
     }
 }

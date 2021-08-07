@@ -20,16 +20,16 @@ import java.util.List;
 
 public class MoneyTransferActivity extends AppCompatActivity {
     RadioButton toMyAcc, toOtherAcc;
-    Spinner from, to;
-    EditText clientName, etAmount;
+    Spinner spFrom, spTo;
+    EditText etClientName, etAmount;
     TextView clientNameLabel;
     Button transfer, findClient;
     Client client;
     Client otherClient;
-    ArrayList<Account> accountList;
-    ArrayList<Account> otherClientAccList;
-    ArrayList<Integer> accountNumbers = new ArrayList<>();
-    ArrayList<Integer> accNumbers = new ArrayList<>();
+    ArrayList<Account> currentClientAccList, otherClientAccList;
+    ArrayList<Integer> fromAccNumbers = new ArrayList<>();
+    ArrayList<Integer> toAccNumbers = new ArrayList<>();
+
     ArrayAdapter<Integer> adapterTo;
     Context context;
     int selectedAccFrom, selectedAccTo = 0;
@@ -39,56 +39,64 @@ public class MoneyTransferActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_money_transfer);
+        //set views
         context = this;
         toMyAcc = findViewById(R.id.toMyAcc);
         toOtherAcc = findViewById(R.id.toOtherClient);
-        from = findViewById(R.id.spFromAcc);
-        to = findViewById(R.id.spToAcc);
-        clientName = findViewById(R.id.etClientName);
+        spFrom = findViewById(R.id.spFromAcc);
+        spTo = findViewById(R.id.spToAcc);
+        etClientName = findViewById(R.id.etClientName);
         etAmount = findViewById(R.id.etAmount);
         transfer = findViewById(R.id.buttonTransfer);
         clientNameLabel = findViewById(R.id.clientNameLable);
         findClient = findViewById(R.id.findClient);
 
+        //get current client instance. for init state other client (who gets the money) is the same client
         client = (Client) getIntent().getSerializableExtra("Client");
         otherClient = client;
-        accountList = new ArrayList<>(client.getClientAccounts());
-        for (int i = 0; i < accountList.size(); i++){
-            accountNumbers.add(accountList.get(i).getAccountId());
+        //get the accounts id list
+        currentClientAccList = new ArrayList<>(client.getClientAccounts());
+        for (int i = 0; i < currentClientAccList.size(); i++){
+            fromAccNumbers.add(currentClientAccList.get(i).getAccountId());
         }
-        accNumbers.addAll(accountNumbers);
+        toAccNumbers.addAll(fromAccNumbers);
 
-        ArrayAdapter<Integer> adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item,accountNumbers);
-        adapterTo = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item,accountNumbers);
-        from.setAdapter(adapter);
-        to.setAdapter(adapterTo);
+        //set adapters with ID's for both spinners (from and to)
+        ArrayAdapter<Integer> adapterFrom = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, fromAccNumbers);
+        adapterTo = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, fromAccNumbers);
+        spFrom.setAdapter(adapterFrom);
+        spTo.setAdapter(adapterTo);
+        //set radioButton toMyAccount as checked; set radioButtons listener
         toMyAcc.toggle();
         toMyAcc.setOnClickListener(new RadioButtonListener());
         toOtherAcc.setOnClickListener(new RadioButtonListener());
 
-        clientName.setEnabled(false);
-        clientName.setVisibility(View.INVISIBLE);
+        //Set clientName invisible (for default option - transfer money to my account)
+        etClientName.setEnabled(false);
+        etClientName.setVisibility(View.INVISIBLE);
         clientNameLabel.setVisibility(View.INVISIBLE);
         findClient.setVisibility(View.INVISIBLE);
 
+        //Find client by Name and show list of his accounts
         findClient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                adapterTo = new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item,new ArrayList<>());
-                to.setAdapter(adapterTo);
-                String name = clientName.getText().toString();
-                otherClient = findClientByName(name);
+                String name = etClientName.getText().toString();
+                //find the other client (who will get the money)
+                otherClient = DataManager.getClientByName(name);
+                //Close virtual keyboard
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(clientName.getWindowToken(),
+                imm.hideSoftInputFromWindow(etClientName.getWindowToken(),
                         InputMethodManager.RESULT_UNCHANGED_SHOWN);
-                if (client != null){
-                    accNumbers = new ArrayList<>();
-                    otherClientAccList = new ArrayList<>(client.getClientAccounts());
+                //get Accounts list for other client, if client exist and set adapter
+                if (otherClient != null){
+                    toAccNumbers = new ArrayList<>();
+                    otherClientAccList = new ArrayList<>(otherClient.getClientAccounts());
                     for (int i = 0; i < otherClientAccList.size(); i++){
-                        accNumbers.add(otherClientAccList.get(i).getAccountId());
+                        toAccNumbers.add(otherClientAccList.get(i).getAccountId());
                     }
-                    adapterTo = new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item,accNumbers);
-                    to.setAdapter(adapterTo);
+                    adapterTo = new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item, toAccNumbers);
+                    spTo.setAdapter(adapterTo);
 
                 } else {
                     Toast.makeText(MoneyTransferActivity.this, "This client does not exist, please check the name.", Toast.LENGTH_LONG).show();
@@ -97,6 +105,7 @@ public class MoneyTransferActivity extends AppCompatActivity {
             }
         });
 
+        //transfer the money
         transfer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -112,10 +121,12 @@ public class MoneyTransferActivity extends AppCompatActivity {
                 makeTransfer(accFrom, accTo, am);
             }
         });
-        from.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+        //set spinners listener - get account number
+        spFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedAccFrom = accountNumbers.get(i);
+                selectedAccFrom = fromAccNumbers.get(i);
             }
 
             @Override
@@ -123,10 +134,10 @@ public class MoneyTransferActivity extends AppCompatActivity {
 
             }
         });
-        to.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedAccTo = accNumbers.get(i);
+                selectedAccTo = toAccNumbers.get(i);
             }
 
             @Override
@@ -137,16 +148,7 @@ public class MoneyTransferActivity extends AppCompatActivity {
 
     }
 
-
-    private Client findClientByName(String name){
-        List<Client> allClients = DataManager.getInstance().getClients();
-        for (Client c: allClients){
-            if (c.getClientName().equals(name))
-                return c;
-        }
-        return null;
-    }
-
+    //Find account by its number
     private Account findAccountByNumber(Client c, int number){
         if(c == null)
             return null;
@@ -159,6 +161,7 @@ public class MoneyTransferActivity extends AppCompatActivity {
         return acc;
     }
 
+    //Transfer the money and update the account
     private void makeTransfer(Account from, Account to, double amount){
         if (from.getAmount() < amount)
             Toast.makeText(MoneyTransferActivity.this, "You don't have enough money on this account.", Toast.LENGTH_LONG).show();
@@ -169,16 +172,19 @@ public class MoneyTransferActivity extends AppCompatActivity {
 
             //update values in main list
             if (toMyAcc.isChecked()){
-                accountList.set(getIndexByNum(to.getAccountId(), accountList),to);
-                accountList.set(getIndexByNum(from.getAccountId(), accountList),from);
-                client.setClientAccounts(accountList);
+                currentClientAccList.set(getIndexByNum(to.getAccountId(), currentClientAccList),to);
+                currentClientAccList.set(getIndexByNum(from.getAccountId(), currentClientAccList),from);
+                client.setClientAccounts(currentClientAccList);
                 otherClient = client;
+                DataManager.mClients.set(DataManager.getClientIndexByName(client.getClientName()), client);
 
             }else {
                 otherClientAccList.set(getIndexByNum(to.getAccountId(), otherClientAccList),to);
-                accountList.set(getIndexByNum(from.getAccountId(), accountList),from);
-                client.setClientAccounts(accountList);
+                currentClientAccList.set(getIndexByNum(from.getAccountId(), currentClientAccList),from);
+                client.setClientAccounts(currentClientAccList);
                 otherClient.setClientAccounts(otherClientAccList);
+                DataManager.mClients.set(DataManager.getClientIndexByName(client.getClientName()), client);
+                DataManager.mClients.set(DataManager.getClientIndexByName(otherClient.getClientName()), otherClient);
             }
             Toast.makeText(MoneyTransferActivity.this, "Your transaction succeed!", Toast.LENGTH_LONG).show();
             etAmount.setText("");
@@ -191,6 +197,7 @@ public class MoneyTransferActivity extends AppCompatActivity {
 
     }
 
+    //Get account index by account number
     private int getIndexByNum(int id, ArrayList<Account> list){
         int index = 0;
         for (int i = 0; i < list.size(); i++){
@@ -201,28 +208,29 @@ public class MoneyTransferActivity extends AppCompatActivity {
         return index;
     }
 
+    //Radio buttons event listener
     private class RadioButtonListener implements View.OnClickListener{
 
         @Override
         public void onClick(View view) {
             switch (view.getId()){
                 case R.id.toMyAcc:
-                    clientName.setEnabled(false);
-                    clientName.setVisibility(View.INVISIBLE);
+                    etClientName.setEnabled(false);
+                    etClientName.setVisibility(View.INVISIBLE);
                     clientNameLabel.setVisibility(View.INVISIBLE);
                     findClient.setVisibility(View.INVISIBLE);
-                    adapterTo = new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item,accountNumbers);
-                    to.setAdapter(adapterTo);
+                    adapterTo = new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item, fromAccNumbers);
+                    spTo.setAdapter(adapterTo);
                     otherClient  = client;
                     break;
                 case R.id.toOtherClient:
-                    clientName.setEnabled(true);
-                    clientName.setVisibility(View.VISIBLE);
+                    etClientName.setEnabled(true);
+                    etClientName.setVisibility(View.VISIBLE);
                     clientNameLabel.setVisibility(View.VISIBLE);
                     findClient.setVisibility(View.VISIBLE);
                     adapterTo = new ArrayAdapter<>(context, R.layout.support_simple_spinner_dropdown_item,new ArrayList<>());
-                    to.setAdapter(adapterTo);
-                    clientName.setText("");
+                    spTo.setAdapter(adapterTo);
+                    etClientName.setText("");
                     otherClient = null;
                     break;
             }
