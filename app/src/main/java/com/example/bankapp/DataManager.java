@@ -33,7 +33,7 @@ public class DataManager {
         accounts.add(new Account(789654398, 2005.0));
         accounts.add(new Account(789654397, 800.0));
 
-        return new Client(456654, "Rick Sanchez", accounts, 1234);
+        return new Client(456654, "Rick Sanchez", accounts, 1234, "rick@gmail1.com");
     }
 
     private Client initializeClient2() {
@@ -42,7 +42,7 @@ public class DataManager {
         accounts.add(new Account(789654302, 100.0));
         accounts.add(new Account(789654303, 25.0));
 
-        return new Client(789987, "Morty Smith", accounts, 1234);
+        return new Client(789987, "Morty Smith", accounts, 1234, "morty@gmail1.com");
     }
 
     private Client initializeClient3() {
