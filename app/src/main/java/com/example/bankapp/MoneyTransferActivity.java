@@ -3,6 +3,8 @@ package com.example.bankapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -115,10 +117,14 @@ public class MoneyTransferActivity extends AppCompatActivity {
                         InputMethodManager.RESULT_UNCHANGED_SHOWN);
 
                 //transfer the money and sent the email
-                double am = Double.parseDouble(etAmount.getText().toString());
-                Account accFrom = findAccountByNumber(client, selectedAccFrom);
-                Account accTo = findAccountByNumber(otherClient, selectedAccTo);
-                makeTransfer(accFrom, accTo, am);
+                if (etAmount.getText().toString().equals("")){
+                    Toast.makeText(MoneyTransferActivity.this, "Enter the amount!", Toast.LENGTH_LONG).show();
+                } else {
+                    double am = Double.parseDouble(etAmount.getText().toString());
+                    Account accFrom = findAccountByNumber(client, selectedAccFrom);
+                    Account accTo = findAccountByNumber(otherClient, selectedAccTo);
+                    makeTransfer(accFrom, accTo, am);
+                }
             }
         });
 
@@ -188,11 +194,11 @@ public class MoneyTransferActivity extends AppCompatActivity {
             }
             Toast.makeText(MoneyTransferActivity.this, "Your transaction succeed!", Toast.LENGTH_LONG).show();
             etAmount.setText("");
-//            //send the mail
-//            Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + otherClient.getEmail()));
-//            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Money Transfer");
-//            emailIntent.putExtra(Intent.EXTRA_TEXT, "You got " + amount + " to your account number " + to.getAccountId());
-//            startActivity(Intent.createChooser(emailIntent, "Bank"));
+            //send the mail
+            Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + otherClient.getEmail()));
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Money Transfer");
+            emailIntent.putExtra(Intent.EXTRA_TEXT, "You got " + amount + " to your account number " + to.getAccountId());
+            startActivity(Intent.createChooser(emailIntent, "Bank"));
         }
 
     }

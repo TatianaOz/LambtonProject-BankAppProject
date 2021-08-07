@@ -54,6 +54,7 @@ public class DataManager {
         return new Client(321123, "Summer Smith", accounts, 1234);
     }
 
+    //Find Client by name
     public static Client getClientByName(String name){
         Client client = null;
         for (Client c: mClients){
@@ -64,6 +65,7 @@ public class DataManager {
         return client;
     }
 
+    //Find client index (in Array) by name
     public static int getClientIndexByName(String name){
         int index = 0;
         for (int i = 0; i < mClients.size(); i++){
