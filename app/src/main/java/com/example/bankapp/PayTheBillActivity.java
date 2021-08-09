@@ -78,6 +78,7 @@ public class PayTheBillActivity extends AppCompatActivity {
                 }
 
                 RadioButton selectedRadio = findViewById(radioGroup.getCheckedRadioButtonId());
+
                 //Subtract the money from account
                 Account accFrom = DataManager.findAccountByNumber(client, selectedAccount.getAccountId());
                 accFrom.setAmount(accFrom.getAmount() - Double.parseDouble(strAmount));
