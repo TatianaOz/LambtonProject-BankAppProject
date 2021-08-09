@@ -75,4 +75,28 @@ public class DataManager {
         }
         return index;
     }
+
+    //Find account by its number
+    public static Account findAccountByNumber(Client c, int number){
+        if(c == null)
+            return null;
+        List<Account> allAccs = c.getClientAccounts();
+        Account acc = null;
+        for (Account a: allAccs){
+            if (a.getAccountId() == number)
+                acc = a;
+        }
+        return acc;
+    }
+
+    //Get account index by account number
+    public static int getIndexByNum(int id, ArrayList<Account> list){
+        int index = 0;
+        for (int i = 0; i < list.size(); i++){
+            if (id == list.get(i).getAccountId()){
+                index = i;
+            }
+        }
+        return index;
+    }
 }

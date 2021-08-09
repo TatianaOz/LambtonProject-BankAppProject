@@ -121,8 +121,8 @@ public class MoneyTransferActivity extends AppCompatActivity {
                     Toast.makeText(MoneyTransferActivity.this, "Enter the amount!", Toast.LENGTH_LONG).show();
                 } else {
                     double am = Double.parseDouble(etAmount.getText().toString());
-                    Account accFrom = findAccountByNumber(client, selectedAccFrom);
-                    Account accTo = findAccountByNumber(otherClient, selectedAccTo);
+                    Account accFrom = DataManager.findAccountByNumber(client, selectedAccFrom);
+                    Account accTo = DataManager.findAccountByNumber(otherClient, selectedAccTo);
                     makeTransfer(accFrom, accTo, am);
                 }
             }
@@ -154,19 +154,6 @@ public class MoneyTransferActivity extends AppCompatActivity {
 
     }
 
-    //Find account by its number
-    private Account findAccountByNumber(Client c, int number){
-        if(c == null)
-            return null;
-        List<Account> allAccs = c.getClientAccounts();
-        Account acc = null;
-        for (Account a: allAccs){
-            if (a.getAccountId() == number)
-                acc = a;
-        }
-        return acc;
-    }
-
     //Transfer the money and update the account
     private void makeTransfer(Account from, Account to, double amount){
         if (from.getAmount() < amount)
@@ -178,15 +165,15 @@ public class MoneyTransferActivity extends AppCompatActivity {
 
             //update values in main list
             if (toMyAcc.isChecked()){
-                currentClientAccList.set(getIndexByNum(to.getAccountId(), currentClientAccList),to);
-                currentClientAccList.set(getIndexByNum(from.getAccountId(), currentClientAccList),from);
+                currentClientAccList.set(DataManager.getIndexByNum(to.getAccountId(), currentClientAccList),to);
+                currentClientAccList.set(DataManager.getIndexByNum(from.getAccountId(), currentClientAccList),from);
                 client.setClientAccounts(currentClientAccList);
                 otherClient = client;
                 DataManager.mClients.set(DataManager.getClientIndexByName(client.getClientName()), client);
 
             }else {
-                otherClientAccList.set(getIndexByNum(to.getAccountId(), otherClientAccList),to);
-                currentClientAccList.set(getIndexByNum(from.getAccountId(), currentClientAccList),from);
+                otherClientAccList.set(DataManager.getIndexByNum(to.getAccountId(), otherClientAccList),to);
+                currentClientAccList.set(DataManager.getIndexByNum(from.getAccountId(), currentClientAccList),from);
                 client.setClientAccounts(currentClientAccList);
                 otherClient.setClientAccounts(otherClientAccList);
                 DataManager.mClients.set(DataManager.getClientIndexByName(client.getClientName()), client);
@@ -201,17 +188,6 @@ public class MoneyTransferActivity extends AppCompatActivity {
             startActivity(Intent.createChooser(emailIntent, "Bank"));
         }
 
-    }
-
-    //Get account index by account number
-    private int getIndexByNum(int id, ArrayList<Account> list){
-        int index = 0;
-        for (int i = 0; i < list.size(); i++){
-            if (id == list.get(i).getAccountId()){
-                index = i;
-            }
-        }
-        return index;
     }
 
     //go back to previous activity

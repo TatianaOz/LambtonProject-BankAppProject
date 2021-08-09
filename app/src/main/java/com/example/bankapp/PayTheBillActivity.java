@@ -15,6 +15,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class PayTheBillActivity extends AppCompatActivity {
 
     RadioGroup radioGroup;
@@ -29,6 +31,7 @@ public class PayTheBillActivity extends AppCompatActivity {
     RadioButton rdPhone;
 
     Client client;
+    ArrayList<Account> clientAccounts;
 
 
     @Override
@@ -49,42 +52,42 @@ public class PayTheBillActivity extends AppCompatActivity {
         rdHydro.setChecked(true);
 
         client = (Client) getIntent().getSerializableExtra("Client");
-
+        clientAccounts = new ArrayList<>(client.getClientAccounts());
 
         //Creating the ArrayAdapter instance having the country list
-        ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,client.getClientAccounts());
+        ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,clientAccounts);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //Setting the ArrayAdapter data on the Spinner
         spinnerAccount.setAdapter(adapter);
-
-
-
 
         btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Account selectedAccount = (Account) spinnerAccount.getSelectedItem();
-                String strAmount = txtAmount.getText() + "";
-                Double amount = Double.parseDouble(strAmount);
+                String strAmount = txtAmount.getText().toString();
 
-                if (amount == null) {
+                if (strAmount.equals("")) {
                     Toast.makeText(PayTheBillActivity.this, "Please enter an amount", Toast.LENGTH_LONG).show();
                     return;
                 }
 
-                if (selectedAccount.getAmount() < amount) {
+                if (selectedAccount.getAmount() < Double.parseDouble(strAmount)) {
                     Toast.makeText(PayTheBillActivity.this, "Selected account doesn't has enough amount.", Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 RadioButton selectedRadio = findViewById(radioGroup.getCheckedRadioButtonId());
-
-
+                //Subtract the money from account
+                Account accFrom = DataManager.findAccountByNumber(client, selectedAccount.getAccountId());
+                accFrom.setAmount(accFrom.getAmount() - Double.parseDouble(strAmount));
+                clientAccounts.set(DataManager.getIndexByNum(accFrom.getAccountId(), clientAccounts),accFrom);
+                client.setClientAccounts(clientAccounts);
+                DataManager.mClients.set(DataManager.getClientIndexByName(client.getClientName()), client);
 
                 Toast.makeText(PayTheBillActivity.this, "Successfully paid " + selectedRadio.getText() + " Bill", Toast.LENGTH_LONG).show();
-                PayTheBillActivity.this.finish();
 
+                PayTheBillActivity.this.finish();
             }
         });
 
