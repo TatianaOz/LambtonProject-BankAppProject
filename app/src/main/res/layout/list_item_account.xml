@@ -13,6 +13,7 @@
         android:layout_marginTop="44dp"
         android:text="Account:"
         android:textAlignment="viewStart"
+        android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,6 +25,7 @@
         android:layout_marginTop="18dp"
         android:text="Account:"
         android:textAlignment="viewEnd"
+        android:textColor="#2196F3"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,6 +37,7 @@
         android:layout_marginTop="6dp"
         android:text="Balance:"
         android:textAlignment="viewEnd"
+        android:textColor="#2196F3"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/textView1" />
 
@@ -58,6 +61,7 @@
         android:layout_marginStart="9dp"
         android:layout_marginTop="18dp"
         android:text="TextView"
+        android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@+id/textView1"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

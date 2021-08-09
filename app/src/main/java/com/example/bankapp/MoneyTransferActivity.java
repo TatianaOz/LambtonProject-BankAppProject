@@ -214,6 +214,13 @@ public class MoneyTransferActivity extends AppCompatActivity {
         return index;
     }
 
+    //go back to previous activity
+    public void goBack(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("Client", client);
+        startActivity(intent);
+    }
+
     //Radio buttons event listener
     private class RadioButtonListener implements View.OnClickListener{
 

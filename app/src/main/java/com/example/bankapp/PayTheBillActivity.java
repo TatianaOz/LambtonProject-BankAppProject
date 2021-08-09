@@ -2,6 +2,7 @@ package com.example.bankapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.View;
@@ -87,5 +88,12 @@ public class PayTheBillActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    //go back to previous activity
+    public void goBack(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("Client", client);
+        startActivity(intent);
     }
 }
