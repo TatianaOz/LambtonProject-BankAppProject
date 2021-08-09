@@ -12,6 +12,7 @@ public class Client implements Serializable {
     private List<Account> clientAccounts;
     private int pin;
     private String email;
+    private List<Bill> clientBills;
 
     //Getters and Setters
     public int getAccessCardNumber() {
@@ -54,6 +55,9 @@ public class Client implements Serializable {
         this.email = email;
     }
 
+    public List<Bill> getClientBills() {
+        return clientBills;
+    }
 
     //Constructors
     public Client(int accessCardNumber, String clientName, List<Account> clientAccounts, int pin, String email) {
@@ -62,6 +66,7 @@ public class Client implements Serializable {
         this.clientAccounts = clientAccounts;
         this.pin = pin;
         this.email = email;
+        this.clientBills = new ArrayList<>();
     }
 
     public Client(int accessCardNumber, String clientName, List<Account> clientAccounts, int pin) {
@@ -70,6 +75,7 @@ public class Client implements Serializable {
         this.clientAccounts = clientAccounts;
         this.pin = pin;
         this.email = "";
+        this.clientBills = new ArrayList<>();
     }
 
     public Client(int accessCardNumber, String clientName, int pin, String email) {
@@ -78,6 +84,7 @@ public class Client implements Serializable {
         this.clientAccounts = new ArrayList<>();
         this.pin = pin;
         this.email = email;
+        this.clientBills = new ArrayList<>();
     }
 
     public Client(int accessCardNumber, String clientName, int pin) {
@@ -86,5 +93,6 @@ public class Client implements Serializable {
         this.clientAccounts = new ArrayList<>();
         this.pin = pin;
         this.email = "";
+        this.clientBills = new ArrayList<>();
     }
 }

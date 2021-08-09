@@ -113,7 +113,7 @@
         android:id="@+id/spToAcc"
         android:layout_width="0dp"
         android:layout_height="39dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:spinnerMode="dropdown"
         app:layout_constraintEnd_toEndOf="@+id/findClient"
         app:layout_constraintStart_toStartOf="@+id/textView7"

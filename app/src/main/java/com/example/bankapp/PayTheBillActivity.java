@@ -12,6 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -23,11 +24,12 @@ import java.util.ArrayList;
 public class PayTheBillActivity extends AppCompatActivity {
 
     RadioGroup radioGroup;
-    Spinner spinnerAccount;
+    CheckBox saveBill;
+    Spinner spinnerAccount, spinnerBill;
     TextView txtSubscriptionNumber;
+    TextView txtSaved;
     TextView txtAmount;
     Button btnPay;
-
     RadioButton rdHydro;
     RadioButton rdWater;
     RadioButton rdGas;
@@ -35,7 +37,7 @@ public class PayTheBillActivity extends AppCompatActivity {
 
     Client client;
     ArrayList<Account> clientAccounts;
-
+    ArrayList<Bill> clientBills;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +45,12 @@ public class PayTheBillActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pay_the_bill);
 
         radioGroup = findViewById(R.id.billTypeGroup);
+
+        saveBill = findViewById(R.id.btnSave);
         spinnerAccount = findViewById(R.id.spinner);
+        spinnerBill = findViewById(R.id.spBillsSaved);
         txtSubscriptionNumber = findViewById(R.id.txtSubscriptionNumber);
+        txtSaved = findViewById(R.id.txtSaved);
         txtAmount = findViewById(R.id.txtAmount);
         btnPay = findViewById(R.id.btnPay);
         rdHydro = findViewById(R.id.rdHydro);
@@ -56,12 +62,20 @@ public class PayTheBillActivity extends AppCompatActivity {
 
         client = (Client) getIntent().getSerializableExtra("Client");
         clientAccounts = new ArrayList<>(client.getClientAccounts());
+        clientBills = new ArrayList<>(client.getClientBills());
 
-        //Creating the ArrayAdapter instance having the country list
-        ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,clientAccounts);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //Setting the ArrayAdapter data on the Spinner
-        spinnerAccount.setAdapter(adapter);
+        if (clientBills.size() == 0){
+            txtSaved.setVisibility(View.INVISIBLE);
+            spinnerBill.setVisibility(View.INVISIBLE);
+        }
+
+        ArrayAdapter adapterBill = new ArrayAdapter(this,android.R.layout.simple_spinner_item,clientBills);
+        adapterBill.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerBill.setAdapter(adapterBill);
+
+        ArrayAdapter adapterAccount = new ArrayAdapter(this,android.R.layout.simple_spinner_item,clientAccounts);
+        adapterAccount.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerAccount.setAdapter(adapterAccount);
 
         btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,12 +103,24 @@ public class PayTheBillActivity extends AppCompatActivity {
                 client.setClientAccounts(clientAccounts);
                 DataManager.mClients.set(DataManager.getClientIndexByName(client.getClientName()), client);
 
+
                 // go to final activity
                 Intent goToFinalActivity = new Intent(getApplicationContext(), TransactionFinishedActivity.class);
                 goToFinalActivity.putExtra("title", "Your transaction succeed!");
                 goToFinalActivity.putExtra("message", "The "+ selectedRadio.getText().toString().toLowerCase() + " bill was successfully paid!");
                 goToFinalActivity.putExtra("Client", client);
                 startActivity(goToFinalActivity);
+            }
+        });
+
+        saveBill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RadioButton selectedRadio = findViewById(radioGroup.getCheckedRadioButtonId());
+                String valType = selectedRadio.getText().toString().toLowerCase();
+                String valSubscriptionNumber = txtSubscriptionNumber.getText().toString();
+                double  valAmount = Double.parseDouble(txtAmount.getText().toString());
+                client.getClientBills().add(new Bill(valType, valSubscriptionNumber,valAmount));
             }
         });
     }
