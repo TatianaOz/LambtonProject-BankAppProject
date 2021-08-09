@@ -80,7 +80,7 @@ public class PayTheBillActivity extends AppCompatActivity {
 
                 RadioButton selectedRadio = findViewById(radioGroup.getCheckedRadioButtonId());
 
-
+                selectedAccount.setAmount(selectedAccount.getAmount() - amount);
 
                 Toast.makeText(PayTheBillActivity.this, "Successfully paid " + selectedRadio.getText() + " Bill", Toast.LENGTH_LONG).show();
                 PayTheBillActivity.this.finish();
