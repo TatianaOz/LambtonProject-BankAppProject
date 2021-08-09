@@ -50,6 +50,10 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("Client", client);
                 startActivity(intent);
                 break;
+            case R.id.logout:
+                intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                break;
         }
     }
 }
