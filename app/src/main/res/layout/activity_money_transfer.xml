@@ -29,7 +29,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
         android:text="From:"
-        android:textColor="#2196F3"
+        android:textColor="@color/blue_500"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
@@ -63,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="To My Account"
-            android:textColor="#2196F3"
+            android:textColor="@color/blue_500"
             android:textSize="16sp" />
 
         <RadioButton
@@ -71,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="To Other Client Account"
-            android:textColor="#2196F3"
+            android:textColor="@color/blue_500"
             android:textSize="16sp" />
     </RadioGroup>
 
@@ -83,7 +83,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="20dp"
         android:text="Client Name:"
-        android:textColor="#2196F3"
+        android:textColor="@color/blue_500"
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/etClientName"
         app:layout_constraintStart_toStartOf="parent"
@@ -97,7 +97,7 @@
         android:layout_marginTop="20dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:textColor="#2196F3"
+        android:textColor="@color/blue_500"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/clientNameLable"
         app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
@@ -109,7 +109,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:text="To:"
-        android:textColor="#2196F3"
+        android:textColor="@color/blue_500"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/clientNameLable" />
@@ -133,7 +133,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:text="Amount:"
-        android:textColor="#2196F3"
+        android:textColor="@color/blue_500"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spToAcc" />
@@ -146,7 +146,7 @@
         android:layout_marginTop="10dp"
         android:ems="10"
         android:inputType="numberDecimal"
-        android:textColor="#2196F3"
+        android:textColor="@color/blue_500"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/textView8"
         app:layout_constraintTop_toBottomOf="@+id/spToAcc" />
@@ -158,7 +158,7 @@
         android:layout_marginStart="144dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="144dp"
-        android:backgroundTint="#2196F3"
+        android:backgroundTint="@color/blue_500"
         android:text="Transfer"
         android:textColor="@color/white"
         android:textSize="16sp"
@@ -173,7 +173,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:text="Find"
-        android:backgroundTint="#2196F3"
+        android:backgroundTint="@color/blue_500"
         android:textColor="@color/white"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -186,7 +186,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:text="&lt;&lt;back"
-        android:textColor="#2196F3"
+        android:textColor="@color/blue_500"
         android:textSize="16sp"
         android:onClick="goBack"
         app:layout_constraintStart_toStartOf="parent"

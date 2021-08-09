@@ -2,10 +2,13 @@ package com.example.bankapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -86,12 +89,14 @@ public class PayTheBillActivity extends AppCompatActivity {
                 client.setClientAccounts(clientAccounts);
                 DataManager.mClients.set(DataManager.getClientIndexByName(client.getClientName()), client);
 
-                Toast.makeText(PayTheBillActivity.this, "Successfully paid " + selectedRadio.getText() + " Bill", Toast.LENGTH_LONG).show();
-
-                PayTheBillActivity.this.finish();
+                // go to final activity
+                Intent goToFinalActivity = new Intent(getApplicationContext(), TransactionFinishedActivity.class);
+                goToFinalActivity.putExtra("title", "Your transaction succeed!");
+                goToFinalActivity.putExtra("message", "The "+ selectedRadio.getText().toString().toLowerCase() + " bill was successfully paid!");
+                goToFinalActivity.putExtra("Client", client);
+                startActivity(goToFinalActivity);
             }
         });
-
     }
 
     //go back to previous activity
@@ -99,5 +104,15 @@ public class PayTheBillActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("Client", client);
         startActivity(intent);
+    }
+
+    //close th virtual keyboard when click on emty place
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (getCurrentFocus() != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+        return super.dispatchTouchEvent(ev);
     }
 }

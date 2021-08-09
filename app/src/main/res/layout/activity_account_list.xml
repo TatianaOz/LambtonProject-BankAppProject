@@ -41,7 +41,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:text="&lt;&lt;back"
-        android:textColor="#2196F3"
+        android:textColor="@color/blue_500"
         android:textSize="16sp"
         android:onClick="goBack"
         app:layout_constraintStart_toStartOf="parent"

@@ -179,13 +179,21 @@ public class MoneyTransferActivity extends AppCompatActivity {
                 DataManager.mClients.set(DataManager.getClientIndexByName(client.getClientName()), client);
                 DataManager.mClients.set(DataManager.getClientIndexByName(otherClient.getClientName()), otherClient);
             }
-            Toast.makeText(MoneyTransferActivity.this, "Your transaction succeed!", Toast.LENGTH_LONG).show();
             etAmount.setText("");
-            //send the mail
-            Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + otherClient.getEmail()));
-            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Money Transfer");
-            emailIntent.putExtra(Intent.EXTRA_TEXT, "You got " + amount + " to your account number " + to.getAccountId());
-            startActivity(Intent.createChooser(emailIntent, "Bank"));
+
+            //go to final activity
+            Intent goToFinalActivity = new Intent(this, TransactionFinishedActivity.class);
+            goToFinalActivity.putExtra("title", "Your transaction succeed!");
+            goToFinalActivity.putExtra("message", "$" + amount + " was transfered from account " + from.getAccountId() + " to account " + to.getAccountId());
+            goToFinalActivity.putExtra("Client", client);
+            startActivity(goToFinalActivity);
+
+//            //send the mail
+//            Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + otherClient.getEmail()));
+//            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Money Transfer");
+//            emailIntent.putExtra(Intent.EXTRA_TEXT, "You got " + amount + " to your account number " + to.getAccountId());
+//            startActivity(Intent.createChooser(emailIntent, "Bank"));
+
         }
 
     }

@@ -46,7 +46,7 @@
             android:onClick="getAction"
             android:text="Check Accounts Balance"
             android:textAlignment="center"
-            android:textColor="#0D8EC1"
+            android:textColor="@color/blue_500"
             android:textSize="16sp" />
 
         <TextView
@@ -60,7 +60,7 @@
             android:onClick="getAction"
             android:text="Pay Utility Bills"
             android:textAlignment="center"
-            android:textColor="#0D8EC1"
+            android:textColor="@color/blue_500"
             android:textSize="16sp" />
 
         <TextView
@@ -74,7 +74,7 @@
             android:layout_margin="10dp"
             android:layout_gravity="center"
             android:textAlignment="center"
-            android:textColor="#0D8EC1"
+            android:textColor="@color/blue_500"
             android:textSize="16sp" />
 
         <TextView
@@ -88,7 +88,7 @@
             android:layout_margin="10dp"
             android:layout_gravity="center"
             android:textAlignment="center"
-            android:textColor="#0D8EC1"
+            android:textColor="@color/blue_500"
             android:textSize="16sp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
