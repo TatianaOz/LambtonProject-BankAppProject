@@ -36,4 +36,9 @@ public class Account implements Serializable {
         this.amount = 0;
     }
 
+    @Override
+    public String toString() {
+        return "Id: " + accountId +
+                ", Amount:" + amount;
+    }
 }

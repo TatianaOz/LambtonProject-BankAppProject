@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.payTheBill:
                 intent = new Intent(this, PayTheBillActivity.class);
+                client = DataManager.getClientByName(client.getClientName());
+                intent.putExtra("Client", client);
                 startActivity(intent);
                 break;
             case R.id.moneyTransfer:

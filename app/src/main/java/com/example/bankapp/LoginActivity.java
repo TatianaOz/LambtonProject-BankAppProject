@@ -24,6 +24,10 @@ public class LoginActivity extends AppCompatActivity {
         pin = findViewById(R.id.txtPin);
         login = findViewById(R.id.btnLogin);
 
+
+        //acn.setText("321123");
+        //pin.setText("1234");
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
