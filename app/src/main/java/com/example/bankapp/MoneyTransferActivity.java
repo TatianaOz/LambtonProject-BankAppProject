@@ -120,7 +120,7 @@ public class MoneyTransferActivity extends AppCompatActivity {
                 //transfer the money and sent the email
                 if (etAmount.getText().toString().equals("")){
                     Toast.makeText(MoneyTransferActivity.this, "Enter the amount!", Toast.LENGTH_LONG).show();
-                } else if (etClientName.getText().toString().equals("")){
+                } else if (etClientName.getText().toString().equals("") && toOtherAcc.isChecked()){
                     Toast.makeText(MoneyTransferActivity.this, "Enter the client name!", Toast.LENGTH_LONG).show();
                 }else if (selectedAccTo == 0){
                     Toast.makeText(MoneyTransferActivity.this, "This client doesn't exists or has no accounts!", Toast.LENGTH_LONG).show();
