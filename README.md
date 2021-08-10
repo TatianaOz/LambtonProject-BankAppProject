@@ -1,12 +1,17 @@
 # LambtonProject-BankAppProject
 Final project
 
-## Team
+## Team 👥
 1. Sehmus Gokce, C0807605
 2. Omairys Uzcategui, C0807503 
 3. Tatiana Ozerskaya, C0805867
 
-## The minimum requirements:
+## User Test for App 👤
+1.  Access Card Number: 456654, Pin:1234, "Rick Sanchez"
+2.  Access Card Number: 789987, Pin:1234, "Morty Smith"
+3.  Access Card Number: 321123, Pin:1234, "Summer Smith"
+
+## The minimum requirements:📲
 The client/user can do the following:
 1.	log in, using the access card number and a pin number
 2.	Check the balance of each account (the client can have multiple accounts)
@@ -22,6 +27,7 @@ The user needs to choose one of theses choices:
 -	Water
 -	Gas
 -	Phone
+
 Let the user then enter a subscription no. and the amount then chooses the account to pay from (if the user has multiple accounts) then click pay to subtract the amount from that account balance. Then give the user an option to save the number for next time.
 
 ## Money transfer:
