@@ -31,17 +31,20 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                int user = Integer.parseInt(acn.getText().toString());
-                int pass = Integer.parseInt(pin.getText().toString());
-                Client client = validLogin(user,pass);
-                if(null != client){
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    intent.putExtra("Client", client);
-                    startActivity(intent);
-
-                }else{
+                if (acn.getText().toString().isEmpty() || pin.getText().toString().isEmpty()){
                     Toast.makeText(getBaseContext(),"Invalid username or password",Toast.LENGTH_LONG).show();
+                }else{
+                    int user = Integer.parseInt(acn.getText().toString());
+                    int pass = Integer.parseInt(pin.getText().toString());
+                    Client client = validLogin(user,pass);
+                    if(null != client){
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.putExtra("Client", client);
+                        startActivity(intent);
+
+                    }else{
+                        Toast.makeText(getBaseContext(),"Invalid username or password",Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });

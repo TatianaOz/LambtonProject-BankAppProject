@@ -77,6 +77,7 @@ public class PayTheBillActivity extends AppCompatActivity {
         adapterAccount.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerAccount.setAdapter(adapterAccount);
 
+        spinnerBill.setOnItemSelectedListener(new SpinnersEvents());
         btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,13 +117,35 @@ public class PayTheBillActivity extends AppCompatActivity {
         saveBill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RadioButton selectedRadio = findViewById(radioGroup.getCheckedRadioButtonId());
-                String valType = selectedRadio.getText().toString().toLowerCase();
-                String valSubscriptionNumber = txtSubscriptionNumber.getText().toString();
-                double  valAmount = Double.parseDouble(txtAmount.getText().toString());
-                client.getClientBills().add(new Bill(valType, valSubscriptionNumber,valAmount));
+                if(txtSubscriptionNumber.getText().toString().isEmpty()){
+                    saveBill.setChecked(false);
+                    Toast.makeText(getBaseContext(),"Please enter a Subscription Number",Toast.LENGTH_LONG).show();
+                }else if(txtAmount.getText().toString().isEmpty()){
+                    saveBill.setChecked(false);
+                    Toast.makeText(getBaseContext(),"Please enter an amount",Toast.LENGTH_LONG).show();
+                }else{
+                    RadioButton selectedRadio = findViewById(radioGroup.getCheckedRadioButtonId());
+                    String valType = selectedRadio.getText().toString();
+                    String valSubscriptionNumber = txtSubscriptionNumber.getText().toString();
+                    double  valAmount = Double.parseDouble(txtAmount.getText().toString());
+                    if(findBill(valType, valSubscriptionNumber)){
+                        saveBill.setChecked(false);
+                        Toast.makeText(getBaseContext(),"This service is already registered",Toast.LENGTH_LONG).show();
+                    }else{
+                        client.getClientBills().add(new Bill(valType, valSubscriptionNumber,valAmount));
+                    }
+                }
             }
         });
+    }
+
+    private boolean findBill(String valType, String valSubscriptionNumber) {
+        for(Bill bill: clientBills){
+            if(bill.getSuscriptionNumber().equalsIgnoreCase(valSubscriptionNumber) && bill.getType().equalsIgnoreCase(valType)){
+                return true;
+            }
+        }
+        return false;
     }
 
     //go back to previous activity
@@ -140,5 +163,33 @@ public class PayTheBillActivity extends AppCompatActivity {
             imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
         return super.dispatchTouchEvent(ev);
+    }
+
+    private class SpinnersEvents implements AdapterView.OnItemSelectedListener {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            String selectedType = String.valueOf(clientBills.get(position).getType());
+            txtSubscriptionNumber.setText(String.valueOf(clientBills.get(position).getSuscriptionNumber()));
+            switch (selectedType.toLowerCase()){
+                case "hydro":
+                    rdHydro.setChecked(true);
+                    break;
+                case "water":
+                    rdWater.setChecked(true);
+                    break;
+                case "gas":
+                    rdGas.setChecked(true);
+                    break;
+                case "phone":
+                    rdPhone.setChecked(true);
+                    break;
+            }
+
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
     }
 }

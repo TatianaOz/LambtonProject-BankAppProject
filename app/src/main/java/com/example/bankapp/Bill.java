@@ -22,6 +22,6 @@ public class Bill implements Serializable {
 
     @Override
     public String toString() {
-        return type.toUpperCase() + ": " + suscriptionNumber;
+        return type+ ": " + suscriptionNumber;
     }
 }
