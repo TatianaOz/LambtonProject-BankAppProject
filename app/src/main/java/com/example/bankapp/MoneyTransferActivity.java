@@ -101,6 +101,7 @@ public class MoneyTransferActivity extends AppCompatActivity {
                     spTo.setAdapter(adapterTo);
 
                 } else {
+                    selectedAccTo = 0;
                     Toast.makeText(MoneyTransferActivity.this, "This client does not exist, please check the name.", Toast.LENGTH_LONG).show();
                 }
 
@@ -119,7 +120,11 @@ public class MoneyTransferActivity extends AppCompatActivity {
                 //transfer the money and sent the email
                 if (etAmount.getText().toString().equals("")){
                     Toast.makeText(MoneyTransferActivity.this, "Enter the amount!", Toast.LENGTH_LONG).show();
-                } else {
+                } else if (etClientName.getText().toString().equals("")){
+                    Toast.makeText(MoneyTransferActivity.this, "Enter the client name!", Toast.LENGTH_LONG).show();
+                }else if (selectedAccTo == 0){
+                    Toast.makeText(MoneyTransferActivity.this, "This client doesn't exists or has no accounts!", Toast.LENGTH_LONG).show();
+                }else{
                     double am = Double.parseDouble(etAmount.getText().toString());
                     Account accFrom = DataManager.findAccountByNumber(client, selectedAccFrom);
                     Account accTo = DataManager.findAccountByNumber(otherClient, selectedAccTo);
