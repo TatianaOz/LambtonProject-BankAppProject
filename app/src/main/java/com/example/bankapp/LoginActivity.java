@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (acn.getText().toString().isEmpty() || pin.getText().toString().isEmpty()){
-                    Toast.makeText(getBaseContext(),"Invalid username or password",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(),"Empty Access Card Number or PIN",Toast.LENGTH_LONG).show();
                 }else{
                     int user = Integer.parseInt(acn.getText().toString());
                     int pass = Integer.parseInt(pin.getText().toString());
@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);
 
                     }else{
-                        Toast.makeText(getBaseContext(),"Invalid username or password",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(),"Invalid Access Card Number or PIN",Toast.LENGTH_LONG).show();
                     }
                 }
             }
